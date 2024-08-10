@@ -109,6 +109,7 @@ def apply_compressed_weight(module, compressed_state_dict, target_device, prefix
 def load_compress_model(model_path, device, torch_dtype, use_fast, revision="main"):
     # partially load model
     # `use_fast=True`` is not supported for some models.
+    print(f"*********************in_load_compress_model*******************************")
     try:
         tokenizer = AutoTokenizer.from_pretrained(
             model_path, use_fast=use_fast, revision=revision, trust_remote_code=True
