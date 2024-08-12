@@ -349,8 +349,6 @@ def load_model(
         return model, tokenizer
     kwargs["revision"] = revision
     
-    if load_4bit:
-        kwargs["load_in_4bit"] = load_4bit
 
     if dtype is not None:  # Overwrite dtype if it is provided in the arguments.
         kwargs["torch_dtype"] = dtype
@@ -368,6 +366,10 @@ def load_model(
                 "Use model from www.modelscope.cn need pip install modelscope"
             )
             raise e
+        
+    if load_4bit:
+        print("**********in_4_bit")
+        kwargs["load_in_4bit"] = load_4bit
     print(f"***************load_model*****************")
     print(f"*****************kwargs: {kwargs}")
     # Load model
