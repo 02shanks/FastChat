@@ -199,6 +199,7 @@ def load_model(
     max_gpu_memory: Optional[str] = None,
     dtype: Optional[torch.dtype] = None,
     load_8bit: bool = False,
+    load_4bit: bool = False,
     cpu_offloading: bool = False,
     gptq_config: Optional[GptqConfig] = None,
     awq_config: Optional[AWQConfig] = None,
@@ -302,6 +303,7 @@ def load_model(
             if debug:
                 print(model)
             return model, tokenizer
+    
     elif awq_config and awq_config.wbits < 16:
         assert (
             awq_config.wbits == 4
@@ -346,6 +348,9 @@ def load_model(
         model, tokenizer = load_xft_model(model_path, xft_config)
         return model, tokenizer
     kwargs["revision"] = revision
+    
+    if load_4bit:
+        kwargs["load_in_4bit"] = load_4bit
 
     if dtype is not None:  # Overwrite dtype if it is provided in the arguments.
         kwargs["torch_dtype"] = dtype
@@ -363,7 +368,8 @@ def load_model(
                 "Use model from www.modelscope.cn need pip install modelscope"
             )
             raise e
-
+    print(f"***************load_model*****************")
+    print(f"*****************kwargs: {kwargs}")
     # Load model
     model, tokenizer = adapter.load_model(model_path, kwargs)
 
@@ -522,6 +528,11 @@ def add_model_args(parser):
     parser.add_argument(
         "--load-8bit", action="store_true", help="Use 8-bit quantization"
     )
+    
+    parser.add_argument(
+        "--load-4bit", action="store_true", help="Use 4-bit quantization"
+    )
+    
     parser.add_argument(
         "--cpu-offloading",
         action="store_true",
