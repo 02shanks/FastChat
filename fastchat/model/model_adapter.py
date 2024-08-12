@@ -374,11 +374,11 @@ def load_model(
     print(f"*****************kwargs: {kwargs}")
     # Load model
     model, tokenizer = adapter.load_model(model_path, kwargs)
-    # Check if model is on GPU or CPU
-    device = next(model.parameters()).device
+    # # Check if model is on GPU or CPU
+    # device = next(model.parameters()).device
 
-    # Print the device
-    print(f"The model is loaded on: {device}")
+    # # Print the device
+    # print(f"The model is loaded on: {device}")
 
     if (
         device == "cpu"
