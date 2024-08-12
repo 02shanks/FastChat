@@ -371,7 +371,7 @@ def load_model(
         print("**********in_4_bit")
         kwargs["load_in_4bit"] = load_4bit
     print(f"***************load_model*****************")
-    print(f"*****************kwargs: {kwargs}")
+    print(f"*****************kwargs: {kwargs}******* device: {device}**********")
     # Load model
     model, tokenizer = adapter.load_model(model_path, kwargs)
     # Check if model is on GPU or CPU
